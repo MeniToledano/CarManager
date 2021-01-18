@@ -1,0 +1,16 @@
+<div class="card text-white bg-primary mb-3 container" style="max-width: 22rem;">
+
+  <button (click)="onClickViewCar()">View Car</button>
+  <app-modal (userResponse)="verifyUserResponse($event)"></app-modal>
+
+  <div class="card-body">
+    <p class="line">Internal id: {{car.internalId}}</p>
+    <p class="line">Plate number: {{car.plateNumber}}</p>
+    <p class="line">Car type: {{carType}}</p>
+    <p class="line">4X4: {{car.fourOnFour}}</p>
+    <p class="line">Engine volume: {{car.engineVolume}}</p>
+    <p class="line">Employee : {{employee}}</p>
+  </div>
+
+
+</div>

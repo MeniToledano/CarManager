@@ -1,0 +1,11 @@
+.container{
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+  border: solid black;
+}
+
+.line{
+  margin-top: 0;
+  margin-bottom: 0;
+}

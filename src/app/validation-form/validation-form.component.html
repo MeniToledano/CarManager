@@ -1,0 +1,122 @@
+<div class="col-sm-6">
+  <h1>car properties:</h1>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label>*Internal Id: </label>
+      <input
+        formControlName="internal"
+        type="text"
+      >
+      <p *ngIf="form.get('internal').errors?.required && form.get('internal').touched"
+         class="warning"
+      >Internal ID is Required!</p>
+      <p *ngIf="form.get('internal').errors?.pattern && form.get('internal').touched"
+         class="warning"
+      >Internal ID Can Contain Only Numbers!!</p>
+    </div>
+
+    <div class="form-group">
+      <label>*Plate Number: </label>
+      <input
+        formControlName="plate"
+        type="text"
+      >
+      <p *ngIf="form.get('plate').errors?.required && form.get('plate').touched"
+         class="warning"
+      >Plate Number is Required!</p>
+      <p *ngIf="form.get('plate').errors?.pattern && form.get('plate').touched"
+         class="warning"
+      >Plate Number Can Contain Only Numbers!!</p>
+      <p *ngIf="plateNumberAlreadyExist"
+         class="warning"
+      >Plate Number already exist in the system!</p>
+
+
+
+
+    </div>
+
+    <div class="form-group">
+      <label>*Car TypeId: </label>
+      <input type="text"
+             style="display: none"
+             formControlName="carTypeId"
+      >
+      <app-dropdown
+        (chosenItem)="setCarType($event)"
+        [itemId]="carTypeId"
+        [items]="carTypes"
+        (touch)="dropdownTouch=$event"
+      ></app-dropdown>
+      <p *ngIf="form.get('carTypeId').errors?.required && dropdownTouch"
+         class="warning"
+      >Must choose car type!</p>
+    </div>
+    <div class="form-group">
+      <label>*4X4: </label>
+      <input #CHECKBOX
+             (change)="fourOnFour=CHECKBOX.checked"
+             [(ngModel)]="fourOnFour"
+             [ngModelOptions]="{standalone: true}"
+             type="checkbox"
+      >
+
+    </div>
+    <div class="form-group">
+      <label>Engine Volume: </label>
+      <input
+        formControlName="engineVol"
+        type="text">
+      <p *ngIf="form.get('engineVol').errors?.pattern && form.get('engineVol').touched"
+         class="warning"
+      >Only Number Allowed</p>
+
+    </div>
+
+
+    <div class="form-group">
+      <label>*Year Of Manufacture: </label>
+      <input
+        formControlName="yearsOfManu"
+        type="text">
+      <p *ngIf="form.get('yearsOfManu').errors?.required && form.get('yearsOfManu').touched"
+         class="warning"
+      >Must fill years of manufacture</p>
+      <p *ngIf="form.get('yearsOfManu').errors?.pattern && form.get('yearsOfManu').touched"
+         class="warning"
+      >enter year in 4 digits 'dddd'</p>
+    </div>
+
+    <div class="form-group">
+      <label>Employee Identifier: </label>
+      <app-dropdown
+        (chosenItem)="employeeIdentifier = $event"
+        [itemId]="employeeIdentifier"
+        [items]="employees"
+      ></app-dropdown>
+    </div>
+
+    <div class="form-group">
+      <label>*Car Care Date: </label>
+      <input
+        formControlName="careDate"
+        type="date"
+      >
+      <div *ngIf="formState==='modify'">
+        <label>Last Care date is {{lastCarCareDate}}</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label>Comments: </label>
+      <input
+        [(ngModel)]="comments"
+        [ngModelOptions]="{standalone: true}"
+        type="text">
+    </div>
+  </form>
+
+</div>
+
+<button (click)="onClickSubmit()" [disabled]="!form.valid" class="btn btn-primary">{{buttonName}}</button>
