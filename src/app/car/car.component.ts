@@ -18,18 +18,28 @@ export class CarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() car: Car;
   deleteCar: boolean;
   performOnce = true;
-  employee: Employee;
-  carType: CarType;
+  employees: Employee[];
+  carTypes: CarType[];
   subscription: Subscription[] = [];
+  carType: CarType;
+  employee: Employee;
 
   constructor(private carService: CarService,
               private employeeService: EmployeeService,
               private carTypeService: CarTypeService) {
+    console.log('in Car');
   }
 
   ngOnInit(): void {
-    const sub1 = this.carTypeService.carTypeByIdRes.subscribe((res: CarType) => this.carType = res);
-    const sub2 = this.employeeService.employeeByIdResponse.subscribe((res: Employee) => this.employee = res);
+    const sub1 = this.carTypeService.allCarTypesResponse.subscribe((res: CarType[]) => {
+      this.carTypes = res;
+      this.carType = this.carTypes.find(element => element.typeId === this.car.carTypeId);
+
+    });
+    const sub2 = this.employeeService.allEmployeesResponse.subscribe((res: Employee[]) => {
+      this.employees = res;
+      this.employee = this.employees.find(element => element.employeeId === this.car.employeeIdentifier);
+    });
     this.subscription.push(sub1);
     this.subscription.push(sub2);
   }
@@ -40,16 +50,18 @@ export class CarComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.car !== undefined && this.performOnce) {
-      this.carTypeService.getCarTypeById(this.car.carTypeId);
-      this.employeeService.getEmployeeById(this.car.employeeIdentifier);
+      this.carTypeService.getCarTypes();
+      this.employeeService.getEmployees();
       this.performOnce = false;
     }
   }
 
   verifyUserResponse(response: string): void {
-    if (response === 'yes'){
-      this.carService.onDeleteCar(this.car.carId);    }
+    if (response === 'yes') {
+      this.carService.onDeleteCar(this.car.carId);
+    }
   }
+
   ngOnDestroy(): void {
     this.subscription.forEach((subscription) => subscription.unsubscribe());
   }

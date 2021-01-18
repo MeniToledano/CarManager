@@ -8,7 +8,7 @@
       >{{itemName}}</button>
       <div aria-labelledby="dropdownBasic1" ngbDropdownMenu>
 
-        <div *ngFor="let item of items; let i = index">
+        <div *ngFor="let item of items">
           <button (click)="onClickItem(item)" ngbDropdownItem>{{item}}</button>
         </div>
       </div>

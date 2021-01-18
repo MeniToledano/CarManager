@@ -6,11 +6,12 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
   styleUrls: ['./dropdown.component.css']
 })
 export class DropdownComponent implements OnInit, OnChanges {
-  itemName: string;
+  itemName: any;
   @Input() itemId: number;
   @Output() chosenItem: EventEmitter<number> = new EventEmitter<number>();
   @Input() items: any[];
   @Output() touch: EventEmitter<boolean> = new EventEmitter<boolean>();
+  item: any;
 
   constructor() {
   }
@@ -23,8 +24,12 @@ export class DropdownComponent implements OnInit, OnChanges {
   }
 
   onClickItem(item: any): void {
+    this.item = item.getId();
+    console.log(this.item);
+    console.log(item.getId());
+    console.log(item);
     this.chosenItem.emit(item.getId());
-    this.itemName = this.chosenItem.toString();
+    //this.itemName = this.chosenItem;
   }
 
   private setDefaultVal(): void {

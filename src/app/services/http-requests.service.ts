@@ -149,8 +149,8 @@ export class HttpRequestsService {
     return this.http.get<EmployeeResponseModel>(this.tempUrlString).pipe(
       map((response: EmployeeResponseModel) => {
 
-        if (response === undefined) {
-          return undefined;
+        if (response === null) {
+          return null;
         }
         return Employee.plainToClass(response);
       })

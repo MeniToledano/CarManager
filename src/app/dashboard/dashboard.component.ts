@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   tempString: string;
   firstParamAdded: boolean;
   subscription: Subscription[] = [];
+  radioButton: number;
 
   constructor(private carService: CarService,
               private carTypesService: CarTypeService) {
@@ -42,6 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.carTypesService.getCarTypes();
     const sub2 = this.carTypesService.allCarTypesResponse.subscribe((data: CarType[]) => {
       this.carTypes = data;
+      this.carTypes.push(new CarType(-1, 'None'));
     });
     const sub3 = this.carService.returnedCarByPlate.subscribe((data: Car[]) => {
       this.cars = data;
@@ -63,39 +65,33 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.onlyDigitsAllowedErrorMSG = !this.plateNumberBoxMsg.match(/^[0-9]*$/);
   }
 
-  onClickGetCarByCarPlateNumber(): void {
-    this.tempString = '';
-    this.firstParamAdded = false;
-    if (this.plateNumberBoxMsg) {
-      this.addParam('platenumber=' + this.plateNumberBoxMsg);
+  onClickFilter(): void {
+    if (this.radioButton === 1) {
+      this.onGetCarByPlateNum();
+    } else if (this.radioButton === 2) {
+      this.onGetCarsByFourOnFourVal();
+    } else if (this.radioButton === 3) {
+      this.onGetCarsByCarType();
+    } else {
+      this.carService.getCars();
     }
-    console.log('urlParams= ' + this.tempString);
+  }
+
+  onGetCarByPlateNum(): void {
+    this.tempString = '';
+    this.tempString += '?platenumber=' + this.plateNumberBoxMsg;
     this.carService.getCarByCarPlate(this.tempString);
   }
 
-  onGetCarsByFilters(): void {
+  onGetCarsByCarType(): void {
     this.tempString = '';
-    this.firstParamAdded = false;
-    if (this.isFourOnFour) {
-      this.addParam('fouronfour=' + this.isFourOnFour);
-    }
-    if (this.chosenType != null) {
-      this.addParam('cartype=' + this.chosenType);
-    }
-    console.log('urlParams= ' + this.tempString);
+    this.tempString += '?cartype=' + this.chosenType;
     this.carService.getCarsByFilters(this.tempString);
   }
 
-  private addParam(param: string): void {
-    if (this.firstParamAdded) {
-      this.tempString += '&';
-    } else {
-      this.tempString += '?';
-    }
-
-    this.tempString += param;
-    this.firstParamAdded = true;
+  private onGetCarsByFourOnFourVal(): void {
+    this.tempString = '';
+    this.tempString += '?fouronfour=' + this.isFourOnFour;
+    this.carService.getCarsByFilters(this.tempString);
   }
-
-
 }

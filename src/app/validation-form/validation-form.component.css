@@ -7,3 +7,13 @@
 .warning{
   color: red;
 }
+#form-style{
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+#in-line{
+display: flex;
+}
+label{
+  margin: 10px;
+}

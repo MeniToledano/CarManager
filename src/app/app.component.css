@@ -1,4 +1,16 @@
 .page-header{
   padding: 10px;
-  font-family: -apple-system;
+  display: flex;
+  justify-content: space-between;
+}
+.item{
+  margin: 10px;
+}
+.logo{
+  margin-top: 20px;
+}
+#body-content{
+  width: 60%;
+  position: absolute;
+  left: 20%;
 }

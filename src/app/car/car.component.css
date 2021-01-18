@@ -9,3 +9,14 @@
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.container{
+  /*position: absolute;*/
+ display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.exit{
+  flex-direction: column;
+  display: flex;
+}

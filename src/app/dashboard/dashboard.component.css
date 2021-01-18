@@ -1,3 +1,12 @@
 .error{
   color : red;
 }
+.container{
+  display: flex;
+  justify-content: space-between;
+}
+#filter{
+  border: 5px solid gray;
+  margin: 10px;
+  padding: 15px;
+}

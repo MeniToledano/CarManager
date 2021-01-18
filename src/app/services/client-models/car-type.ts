@@ -16,8 +16,8 @@ export class CarType {
   static arrPlainToClass(carTypesJson: CarTypeResponseModel[]): CarType[] {
     return carTypesJson.map(carType => (CarType.plainToClass(carType)));
   }
-  public toString = (): string => {
-    return `${this.typeName}`;
+  public toString(): string{
+    return String(this.typeName);
   }
   public getId(): number{
     return this.typeId;

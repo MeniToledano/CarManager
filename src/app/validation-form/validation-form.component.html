@@ -1,4 +1,4 @@
-<div class="col-sm-6">
+<div class="col-sm-6" id="form-style">
   <h1>car properties:</h1>
   <form [formGroup]="form">
     <div class="form-group">
@@ -32,21 +32,19 @@
       >Plate Number already exist in the system!</p>
 
 
-
-
     </div>
 
-    <div class="form-group">
+    <div class="form-group" id="in-line">
       <label>*Car TypeId: </label>
-      <input type="text"
+      <input formControlName="carTypeId"
              style="display: none"
-             formControlName="carTypeId"
+             type="text"
       >
       <app-dropdown
         (chosenItem)="setCarType($event)"
+        (touch)="dropdownTouch=$event"
         [itemId]="carTypeId"
         [items]="carTypes"
-        (touch)="dropdownTouch=$event"
       ></app-dropdown>
       <p *ngIf="form.get('carTypeId').errors?.required && dropdownTouch"
          class="warning"

@@ -1,51 +1,76 @@
 <div>
-  <h6>Search by:</h6>
-  <div>
-    <input #PLATENUMBER (change)="OTHERFILTERS.checked = false" style="margin: 5px" type="radio">Plate Number:<br>
-    <input #INPUT
-           (keyup)="onInsertValues(INPUT.value)"
-           [disabled]="!PLATENUMBER.checked"
-           name="Car Type"
-           type="text">
-    <div *ngIf="onlyDigitsAllowedErrorMSG" class="error">Please insert only digits!</div>
-  </div>
-  <div>
-    <button (click)="onClickGetCarByCarPlateNumber()"
-            class="btn btn-outline-primary"
-            [disabled]="!PLATENUMBER.checked">filter
-    </button>
-  </div>
-  <br>
+  <form id="filter">
+    <div class="container">
+      <h1>Search by:</h1>
+      <button class="btn btn-outline-primary"
+              id="item"
+      (click)="onClickFilter()"
+      >Filter
+      </button>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <input #PLATENUMBER
+               (click)="radioButton = 1"
+               [checked]="(radioButton === 1)"
+               style="margin: 5px"
+               type="radio"
+        >Plate Number:<br>
+        <input #INPUT
+               (keyup)="onInsertValues(INPUT.value)"
+               [disabled]="!PLATENUMBER.checked"
+               name="Car Type"
+               type="text">
+        <div *ngIf="onlyDigitsAllowedErrorMSG"
+             class="error">Please insert only digits!
+        </div>
+      </div>
+      <div class="col">
+        <input #FOURONFOUR
+               (click)="radioButton = 2"
+               [checked]="(radioButton === 2)"
+               style="margin: 5px"
+               type="radio"
+        >4X4:<br>
+        <label>4X4:</label>
+        <input (change)="isFourOnFour = !isFourOnFour"
+               [disabled]="!FOURONFOUR.checked"
+               name="4X4"
+               type="checkbox">
 
-
-  <div>
-    <input #OTHERFILTERS
-           (change)="PLATENUMBER.checked = false"
-           style="margin: 5px"
-           type="radio"
-    >other filters:<br>
-  </div>
-  <div>
-    <label>4X4:</label>
-    <input (change)="isFourOnFour = !isFourOnFour"
-           [disabled]="!OTHERFILTERS.checked"
-           name="4X4"
-           type="checkbox">
-  </div>
- <app-dropdown
-   [items]="carTypes"
-   (chosenItem)="chosenType=$event"></app-dropdown>
-  <div>
-    <button (click)="onGetCarsByFilters()"
-            class="btn btn-outline-primary"
-            [disabled]="!OTHERFILTERS.checked">filter
-    </button>
-  </div>
-  <div *ngFor="let car of cars; let i = index">
-    <app-car
-      [car]="car"
-    ></app-car>
-    <br>
-  </div>
-
+      </div>
+      <div class="col">
+        <div>
+          <input
+                 (click)="radioButton = 3"
+                 [checked]="(radioButton === 3)"
+                 style="margin: 5px"
+                 type="radio"
+          >Car Type:
+        </div>
+        <app-dropdown
+          (chosenItem)="chosenType=$event"
+          [itemId]="chosenType"
+          [items]="carTypes"></app-dropdown>
+      </div>
+      <div class="col">
+        <div>
+          <input
+            (click)="radioButton = 4"
+            [checked]="(radioButton === 4)"
+            style="margin: 5px"
+            type="radio"
+          >All cars:<br>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
+
+<div *ngFor="let car of cars; let i = index">
+  <app-car
+    [car]="car"
+  ></app-car>
+  <br>
+</div>
+
