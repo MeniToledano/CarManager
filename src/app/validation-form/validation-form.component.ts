@@ -78,17 +78,19 @@ export class ValidationFormComponent implements OnInit, OnDestroy {
       }
     });
     const sub3 = this.carService.carAddedSuccessfully.subscribe((response: boolean) => {
-      if (response){
+      if (response) {
         alert('Car added successfully!');
       }
     });
     const sub4 = this.carService.carModifiedSuccessfully.subscribe((response: boolean) => {
-      if (response){
+      if (response) {
         alert('Car Modified successfully!');
       }
     });
     const sub5 = this.employeeService.allEmployeesResponse.subscribe((response: Employee[]) => {
       this.employees = response;
+      // adding 'None' employee in order to add functionality to "delete" employee
+      this.employees.push(new Employee('None', '', -1));
     });
     this.subscription.push(sub1);
     this.subscription.push(sub2);
