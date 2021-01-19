@@ -102,7 +102,7 @@ export class ValidationFormComponent implements OnInit, OnDestroy {
   onClickSubmit(): void {
     if (this.formState === 'create') {
       this.plateNumberAlreadyExist = false;
-      this.carService.getCarByCarPlate(this.plateNumber);
+      this.carService.getCarByCarPlate('?platenumber=' + this.form.get('plate').value);
     } else if (this.formState === 'modify') {
       // no need to check plate number
       this.mutateOriginalCar();
